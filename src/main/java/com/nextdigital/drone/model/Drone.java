@@ -36,11 +36,12 @@ public class Drone implements Serializable {
     @Enumerated(EnumType.STRING)
     private Model model;
 
-    @Column(name = "weight_limit")
+    @Column(name = "weight_limit", columnDefinition = "float4 default 0.0")
     @Max(value = 500, message = "The maximum value allowed is 500")
     private Float weightLimit;
 
-    @Column(name = "battery_capacity")
+    @Column(name = "battery_capacity", columnDefinition = "float4 default 0.0")
+    @Max(value = 100, message = "The maximum battery capacity is 100")
     private Float batteryCapacity;
 
     @Enumerated(EnumType.STRING)
@@ -51,7 +52,7 @@ public class Drone implements Serializable {
 
     @Transient
     @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
-    private List<DroneMedication> droneMedicationList;
+    private List<Delivery> deliveryList;
 
 
     public Drone(String serialNumber, Model model, Float weightLimit, Float batteryCapacity, State state, Boolean enabled) {

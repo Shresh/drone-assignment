@@ -32,7 +32,7 @@ public class Medication implements Serializable {
     @Pattern(regexp = "^[A-Za-z0-9_-]+$", message = "Only letters, numbers, hyphens, and underscores are allowed.")
     private String name;
 
-    @Column(name = "weight")
+    @Column(name = "weight", columnDefinition = "float4 default 0.0")
     private Float weight;
 
     @Column(name = "code")
@@ -48,7 +48,7 @@ public class Medication implements Serializable {
 
     @Transient
     @OneToMany(mappedBy = "medication", fetch = FetchType.LAZY)
-    private List<DroneMedication> droneMedicationList;
+    private List<DeliveryItems> deliveryItemsList;
 
     public Medication(String name, Float weight, String code, byte[] image, Boolean enabled) {
         this.name = name;
