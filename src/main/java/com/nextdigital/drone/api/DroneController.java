@@ -52,8 +52,17 @@ public class DroneController extends BaseController {
         }
     }
 
+    @GetMapping(value = "getbatterybydroneid/{id}")
+    public ResponseEntity<?> getBatteryByDroneid(@PathVariable("id") Integer id) throws NotFoundException {
+        try {
+            return ResponseEntity.ok(successResponse(customMessageSource.get("fetched", customMessageSource.get("drone")), droneService.getbatterybydroneid(id)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse(customMessageSource.get("error.fetched", customMessageSource.get("drone")), e.getLocalizedMessage()));
+        }
+    }
+
     @GetMapping(value = "getall")
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll() {
         try {
             return ResponseEntity.ok(successResponse(customMessageSource.get("fetched.list", customMessageSource.get("drone")), droneService.getall()));
         } catch (Exception e) {
@@ -63,7 +72,7 @@ public class DroneController extends BaseController {
     }
 
     @GetMapping(value = "getavailabledrones")
-    public ResponseEntity<?> getAvailableDrones(){
+    public ResponseEntity<?> getAvailableDrones() {
         try {
             return ResponseEntity.ok(successResponse(customMessageSource.get("fetched.list", customMessageSource.get("drone")), droneService.getavailabledrones()));
         } catch (Exception e) {
