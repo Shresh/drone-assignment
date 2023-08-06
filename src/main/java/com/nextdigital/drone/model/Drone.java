@@ -54,6 +54,10 @@ public class Drone implements Serializable {
     @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
     private List<Delivery> deliveryList;
 
+    @Transient
+    @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
+    private List<DroneBatteryHistory> droneBatteryHistoryList;
+
 
     public Drone(String serialNumber, Model model, Float weightLimit, Float batteryCapacity, State state, Boolean enabled) {
         this.serialNumber = serialNumber;
