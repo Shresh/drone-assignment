@@ -43,7 +43,7 @@ public class Delivery implements Serializable {
     private Float totalWeight;
 
     @Transient
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER)
     private List<DeliveryItems> deliveryItemsList;
 
     public Delivery(Drone drone, Boolean status, String deliveryLocation, Float totalWeight) {

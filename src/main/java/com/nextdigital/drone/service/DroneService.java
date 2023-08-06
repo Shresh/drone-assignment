@@ -1,8 +1,10 @@
 package com.nextdigital.drone.service;
 
+import ch.qos.logback.core.status.Status;
 import com.nextdigital.drone.api.request.DroneRequest;
 import com.nextdigital.drone.api.response.DeliveryResponse;
 import com.nextdigital.drone.api.response.DroneResponse;
+import com.nextdigital.drone.enums.State;
 import com.nextdigital.drone.model.Drone;
 import javassist.NotFoundException;
 
@@ -18,6 +20,8 @@ public interface DroneService {
     DroneResponse getbyid(Integer id) throws NotFoundException;
 
     DroneResponse getbystatus(String status);
+
+    void changestate(State state, Drone drone);
 
     boolean changeenabled(Integer id) throws NotFoundException;
 

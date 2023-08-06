@@ -4,6 +4,7 @@ import com.nextdigital.drone.api.request.DroneRequest;
 import com.nextdigital.drone.api.response.DeliveryResponse;
 import com.nextdigital.drone.api.response.DroneResponse;
 import com.nextdigital.drone.config.Messages;
+import com.nextdigital.drone.enums.State;
 import com.nextdigital.drone.model.Drone;
 import com.nextdigital.drone.repository.DroneRepo;
 import com.nextdigital.drone.service.DroneService;
@@ -82,6 +83,13 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public DroneResponse getbystatus(String status) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void changestate(State state, Drone drone) {
+        drone.setState(state);
+        droneRepo.save(drone);
     }
 
     @Override
