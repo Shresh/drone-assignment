@@ -11,8 +11,9 @@ import java.util.List;
 public class DeliveryResponse {
     private Long id;
     private Integer drone;
+    private String serialNumber;
     private Boolean status;
     private String deliveryLocation;
-    private float totalWeight;
+    private Float totalWeight;
     private List<DeliveryItemsResponse> deliveryItemsList;
 }
