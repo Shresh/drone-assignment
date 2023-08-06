@@ -13,7 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,7 +97,7 @@ public class DroneServiceImpl implements DroneService {
     public List<DroneResponse> getavailabledrones() {
         List<Drone> droneList = droneRepo.getavailabledrones();
 
-        return droneList.stream().map(x->{
+        return droneList.stream().map(x -> {
             DroneResponse droneResponse = new DroneResponse();
             BeanUtils.copyProperties(x, droneResponse);
             return droneResponse;
