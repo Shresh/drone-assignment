@@ -19,4 +19,6 @@ public interface DroneService {
     DroneResponse getbystatus(String status);
 
     boolean changeenabled(Integer id) throws NotFoundException;
+
+    List<DroneResponse> getavailabledrones();
 }
