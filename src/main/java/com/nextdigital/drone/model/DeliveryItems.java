@@ -26,7 +26,7 @@ public class DeliveryItems implements Serializable {
     private Integer quantity;
 
     @Column(name = "weight", columnDefinition = "float4 default 0.0")
-    private float weight;
+    private Float weight;
 
     @JoinColumn(name = "medication_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,4 +35,11 @@ public class DeliveryItems implements Serializable {
     @JoinColumn(name = "delivery_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Delivery delivery;
+
+    public DeliveryItems(Integer quantity, Float weight, Medication medication, Delivery delivery) {
+        this.quantity = quantity;
+        this.weight = weight;
+        this.medication = medication;
+        this.delivery = delivery;
+    }
 }

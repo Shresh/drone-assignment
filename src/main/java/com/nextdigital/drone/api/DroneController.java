@@ -43,6 +43,15 @@ public class DroneController extends BaseController {
         }
     }
 
+    @GetMapping(value = "getdronedelivery/{id}")
+    public ResponseEntity<?> getDroneDelivery(@PathVariable("id") Integer id) throws NotFoundException {
+        try {
+            return ResponseEntity.ok(successResponse(customMessageSource.get("fetched", customMessageSource.get("drone")), droneService.getdronedelivery(id)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse(customMessageSource.get("error.fetched", customMessageSource.get("drone")), e.getLocalizedMessage()));
+        }
+    }
+
     @GetMapping(value = "getall")
     public ResponseEntity<?> getAll(){
         try {

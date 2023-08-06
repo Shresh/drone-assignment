@@ -2,8 +2,12 @@ package com.nextdigital.drone.util;
 
 import com.nextdigital.drone.enums.Model;
 import com.nextdigital.drone.enums.State;
+import com.nextdigital.drone.model.Delivery;
+import com.nextdigital.drone.model.DeliveryItems;
 import com.nextdigital.drone.model.Drone;
 import com.nextdigital.drone.model.Medication;
+import com.nextdigital.drone.repository.DeliveryItemsRepo;
+import com.nextdigital.drone.repository.DeliveryRepo;
 import com.nextdigital.drone.repository.DroneRepo;
 import com.nextdigital.drone.repository.MedicationRepo;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +21,46 @@ import java.util.List;
 public class InitialCreator {
     private final DroneRepo droneRepo;
     private final MedicationRepo medicationRepo;
+    private final DeliveryRepo deliveryRepo;
+    private final DeliveryItemsRepo deliveryItemsRepo;
 
     public void initialSetup() {
         addDrones();
         addMedication();
+        addDelivery();
+        addDeliveryItem();
     }
+
+    private void addDeliveryItem() {
+        DeliveryItems deliveryItems1 = setDeliveryItems(1, 22.0f, "Medicine_A", "Kathmandu");
+        DeliveryItems deliveryItems2 = setDeliveryItems(2, 30.0f, "Medicine_B", "Kathmandu");
+        DeliveryItems deliveryItems3 = setDeliveryItems(1, 40.0f, "Medicine_C", "Bhaktapur");
+        DeliveryItems deliveryItems4 = setDeliveryItems(2, 30.0f, "Medicine_B", "Bhaktapur");
+        List<DeliveryItems> deliveryItemsList = Arrays.asList(deliveryItems1, deliveryItems2, deliveryItems3, deliveryItems4);
+        deliveryItemsRepo.saveAll(deliveryItemsList);
+    }
+
+    private void addDelivery() {
+        Delivery delivery1 = setDelivery("MNO345", "Kathmandu", 82.0f);
+        Delivery delivery2 = setDelivery("BCD890", "Bhaktapur", 100f);
+        List<Delivery> deliveryList = Arrays.asList(delivery1, delivery2);
+        deliveryRepo.saveAll(deliveryList);
+    }
+
 
     private void addMedication() {
         Medication medication1 = setMedication("Medicine_A", 22.0f, "ABC123", null, true);
 
-        Medication medication2 = setMedication("Medicine_B", 200.0f, "DEF456", null, true);
+        Medication medication2 = setMedication("Medicine_B", 30.0f, "DEF456", null, true);
 
 
-        Medication medication3 = setMedication("Medicine_C", 100.0f, "GHI789", null, true);
+        Medication medication3 = setMedication("Medicine_C", 40.0f, "GHI789", null, true);
 
         List<Medication> medicationList = Arrays.asList(medication1, medication2, medication3);
         medicationRepo.saveAll(medicationList);
     }
 
-    public void addDrones() {
+    private void addDrones() {
         Drone drone1 = setDrone("ABC123", Model.Lightweight, 100.0f, 100.f, State.IDLE, true);
         Drone drone2 = setDrone("DEF456", Model.Middleweight, 150.0f, 90.0f, State.IDLE, true);
         Drone drone3 = setDrone("GHI789", Model.Cruiserweight, 200.0f, 80.0f, State.LOADED, true);
@@ -59,5 +84,16 @@ public class InitialCreator {
 
     private Medication setMedication(String name, Float weight, String code, byte[] image, Boolean enable) {
         return new Medication(name, weight, code, image, enable);
+    }
+
+    private Delivery setDelivery(String serialNumber, String deliveryLocation, Float totalWeight) {
+        Drone drone = droneRepo.findBySerialNumber(serialNumber);
+        return new Delivery(drone, true, deliveryLocation, totalWeight);
+    }
+
+    private DeliveryItems setDeliveryItems(Integer quantity, Float weight, String medicationName, String deliveryLocation) {
+        Medication medication = medicationRepo.findByName(medicationName);
+        Delivery delivery = deliveryRepo.findByDeliveryLocation(deliveryLocation);
+        return new DeliveryItems(quantity, weight, medication, delivery);
     }
 }

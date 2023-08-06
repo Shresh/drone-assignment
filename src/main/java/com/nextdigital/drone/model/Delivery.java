@@ -27,6 +27,9 @@ public class Delivery implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Drone drone;
 
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private Boolean status;
+
     /**
      * later can add location's lat long and check whether the drone is in location or not
      * distance
@@ -37,9 +40,24 @@ public class Delivery implements Serializable {
     private String deliveryLocation;
 
     @Column(name = "total_weight", columnDefinition = "float4 default 0.0")
-    private float totalWeight;
+    private Float totalWeight;
 
     @Transient
     @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
     private List<DeliveryItems> deliveryItemsList;
+
+    public Delivery(Drone drone, Boolean status, String deliveryLocation, Float totalWeight) {
+        this.drone = drone;
+        this.status = status;
+        this.deliveryLocation = deliveryLocation;
+        this.totalWeight = totalWeight;
+    }
+
+    public Delivery(Drone drone, Boolean status, String deliveryLocation, Float totalWeight, List<DeliveryItems> deliveryItemsList) {
+        this.drone = drone;
+        this.status = status;
+        this.deliveryLocation = deliveryLocation;
+        this.totalWeight = totalWeight;
+        this.deliveryItemsList = deliveryItemsList;
+    }
 }

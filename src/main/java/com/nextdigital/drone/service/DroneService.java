@@ -1,6 +1,7 @@
 package com.nextdigital.drone.service;
 
 import com.nextdigital.drone.api.request.DroneRequest;
+import com.nextdigital.drone.api.response.DeliveryResponse;
 import com.nextdigital.drone.api.response.DroneResponse;
 import com.nextdigital.drone.model.Drone;
 import javassist.NotFoundException;
@@ -21,4 +22,6 @@ public interface DroneService {
     boolean changeenabled(Integer id) throws NotFoundException;
 
     List<DroneResponse> getavailabledrones();
+
+    List<DeliveryResponse> getdronedelivery(Integer id);
 }
