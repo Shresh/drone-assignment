@@ -117,4 +117,10 @@ public class DroneServiceImpl implements DroneService {
     public List<DeliveryResponse> getdronedelivery(Integer id) {
         return null;
     }
+
+    @Override
+    public Float getbatterybydroneid(Integer droneid) throws NotFoundException {
+        Drone drone = checkit(droneid);
+        return drone.getBatteryCapacity();
+    }
 }

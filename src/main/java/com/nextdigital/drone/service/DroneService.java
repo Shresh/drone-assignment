@@ -1,6 +1,5 @@
 package com.nextdigital.drone.service;
 
-import ch.qos.logback.core.status.Status;
 import com.nextdigital.drone.api.request.DroneRequest;
 import com.nextdigital.drone.api.response.DeliveryResponse;
 import com.nextdigital.drone.api.response.DroneResponse;
@@ -28,4 +27,6 @@ public interface DroneService {
     List<DroneResponse> getavailabledrones();
 
     List<DeliveryResponse> getdronedelivery(Integer id);
+
+    Float getbatterybydroneid(Integer droneid) throws NotFoundException;
 }
